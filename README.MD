@@ -10,3 +10,20 @@ TECHNOLOGIES USED -
 7. JQUERY 1.12.4
 8. JQUERY UI 1.12.1
 
+
+System Bakground info - 
+The system is used for searching the information about the department details.
+
+
+Local Host Server Address : http://localhost:5000/
+View api info - http://localhost:5000/api/ui/
+
+Curl command for autocomplete api call - curl -X GET --header 'Accept: application/json' 'http://localhost:5000/api/department/get_department/#'
+
+Replace hash with query word.
+
+Eg. - 
+curl -X GET --header 'Accept: application/json' 'http://localhost:5000/api/department/get_department/comp'
+
+Note - Please also install swagger ui bundle : pip install swagger-ui-bundle 
+
