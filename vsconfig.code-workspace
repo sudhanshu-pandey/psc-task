@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"python.pythonPath": "/home/spandey/anaconda3/envs/flask_env_a/bin/python"
+	}
+}

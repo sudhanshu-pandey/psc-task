@@ -1,0 +1,91 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger ReST Api for department-finder app
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# Paths supported by the server application
+paths:
+  /department:
+    get:
+      operationId: department.read_all
+      tags:
+        - Departments
+      summary: Read the entire list of departments
+      description: Read the list of departments
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Number of departments to get from department list
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset from beginning of list where to start gathering department
+          required: false
+      responses:
+        200:
+          description: Successfully read department list operation
+          schema:
+            type: array
+            items:
+              properties:
+                dname:
+                  type: string
+                dep_description:
+                  type: string
+
+  /department/{dname}:
+    get:
+      operationId: department.read_one
+      tags:
+        - Departments
+      summary: Read one department from the department list
+      description: Read one department from the department list
+      parameters:
+        - name: dname
+          in: path
+          description: name of the department to get from the list
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read department from department list operation
+          schema:
+            properties:
+              dname:
+                type: string
+              dep_description:
+                type: string
+
+  /department/get_department/{dqry}:
+    get:
+      operationId: department.read_matching_dep
+      tags:
+        - Departments
+      summary: Read departments that have matching names from the department list
+      description: Read departments with matching name
+      parameters:
+        - name: dqry
+          in: path
+          description: name of the departments to get from the list that are similar to input query
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read departments from department list that match the criteria
+          schema:
+            type: array
+            items:
+              properties:
+                dname:
+                  type: string
+                dep_description:
+                  type: string

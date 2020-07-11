@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Application Home Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="static/css/home.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        let result = null;
+
+        // function to get simlar depart ment names using api and display in autocomplete textbox
+        var binddepartmentlist = function () {
+            result = null;
+
+            // check input lenght of input in autocomplete textbox
+            if ($("#tags").val().length < 2) return;
+
+
+            var availableTags = [];
+            // api url
+            var apiPath = "api/department/get_department/" + $("#tags").val();
+
+            // making call to api for get method using ajax
+            $.ajax(apiPath,
+                {
+                    success: function (data, status, xhr) {
+
+                        result = data;
+
+                        var availableTags = [];
+
+                        for (var index = 0; index < result.length; index++) {
+                            availableTags.push(data[index].dname);
+                        }
+
+                        $("#tags").autocomplete({
+                            source: availableTags
+                        });
+                    }
+                });
+        }
+        // on search button click show description about department
+        var displaydiscription = function () {
+
+            var resultfound = false;
+            var dep_name = $("#tags").val();
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].dname.toLowerCase() === dep_name.toLowerCase()) {
+                    $("#depname").html(result[i].dname);
+                    $("#departmentdesc").html(result[i].dep_description);
+                    resultfound = true;
+                    break;
+                }
+            }
+            if (!resultfound) {
+                $("#dname").html("");
+                $("#departmentdesc").html("No record Found");
+
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Find information about your department</h1>
+        <form>
+            <div class="form-group">
+                <label for="tags">Enter the department name - </label>
+                <input type="text" class="form-control" id="tags" onkeyup="binddepartmentlist()">
+                <button type="button" onclick="displaydiscription()">Search</button>
+            </div>
+            <div>
+                <h2 id="depname"></h2>
+                <p id="departmentdesc"></p>
+
+            </div>
+        </form>
+
+    </div>
+
+</body>
+
+</html>
